@@ -1,0 +1,66 @@
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none;
+  font-family: "PingFang TC", "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", system-ui, sans-serif;
+  background: #fff7dc; color: #4a3b2a;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+#app { height: 100%; display: flex; flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+header { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #ffe9a8; box-shadow: 0 2px 0 #f3d27a; }
+h1 { margin: 0; font-size: 22px; white-space: nowrap; }
+#picker { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px; flex: 1; scrollbar-width: none; touch-action: pan-x; }
+#picker::-webkit-scrollbar { display: none; }
+.pic { flex: 0 0 auto; width: 76px; border: 3px solid transparent; border-radius: 16px; background: #fff;
+  padding: 4px 4px 2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; font: inherit; font-size: 15px; color: inherit;
+  box-shadow: 0 2px 0 #e7c76a; }
+.pic svg { width: 56px; height: 56px; }
+.pic.active { border-color: #ff8a3d; background: #fff1e2; }
+
+main { flex: 1; min-height: 0; display: flex; gap: 10px; padding: 10px; }
+#stage { flex: 1; min-width: 0; min-height: 0; position: relative; }
+#board { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 18px; box-shadow: 0 4px 0 #ecd28d, 0 0 0 4px #fff inset;
+  overflow: hidden; touch-action: none; }
+#board canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; display: block; }
+#outlineLayer { pointer-events: none; mix-blend-mode: multiply; }
+#userLayer { cursor: crosshair; }
+
+#panel { display: flex; flex-direction: column; gap: 10px; width: 300px; overflow-y: auto; }
+.group { background: #fff; border-radius: 18px; padding: 8px; display: grid; gap: 8px; box-shadow: 0 3px 0 #ecd28d; }
+#tools { grid-template-columns: repeat(2, 1fr); }
+#sizes { grid-template-columns: repeat(3, 1fr); }
+#palette { grid-template-columns: repeat(6, 1fr); }
+#actions { grid-template-columns: repeat(2, 1fr); }
+
+button { font: inherit; color: inherit; cursor: pointer; border: none; touch-action: manipulation; }
+.tool, .act, .size { min-height: 60px; border-radius: 14px; background: #fff4d6; font-size: 17px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 6px; border: 3px solid transparent; box-shadow: 0 3px 0 #e8cf87; }
+.tool:active, .act:active, .size:active, .swatch:active, .pic:active { transform: translateY(2px); box-shadow: none; }
+.ico { font-size: 26px; line-height: 1; }
+.tool.active, .size.active { border-color: #ff8a3d; background: #ffe2c6; }
+.size { flex-direction: column; gap: 2px; font-size: 14px; }
+.size i { display: block; width: var(--d); height: var(--d); border-radius: 50%; background: var(--cur, #333); }
+.act.save { background: #c9f2d0; box-shadow: 0 3px 0 #8fd39c; }
+.act:disabled { opacity: .4; }
+.swatch { aspect-ratio: 1; min-height: 40px; border-radius: 50%; border: 3px solid rgba(0,0,0,.12); box-shadow: 0 3px 0 rgba(0,0,0,.15); }
+.swatch.active { outline: 4px solid #4a3b2a; outline-offset: 2px; }
+
+#toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(120px); background: #4a3b2a; color: #fff;
+  padding: 12px 22px; border-radius: 999px; font-size: 18px; transition: transform .25s; pointer-events: none; }
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Portrait / narrow: tools go under the canvas */
+@media (orientation: portrait), (max-width: 760px) {
+  main { flex-direction: column; }
+  #panel { width: 100%; flex-direction: row; flex-wrap: wrap; overflow: visible; }
+  #tools { grid-template-columns: repeat(4, 1fr); flex: 1 1 100%; }
+  #sizes { flex: 1 1 30%; }
+  #actions { grid-template-columns: repeat(4, 1fr); flex: 1 1 62%; }
+  #palette { flex: 1 1 100%; grid-template-columns: repeat(12, 1fr); }
+  .swatch { min-height: 44px; }
+  h1 { font-size: 18px; }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  header { padding: 4px 10px; } .pic svg { width: 40px; height: 40px; } .pic { width: 60px; }
+  .tool, .act, .size { min-height: 48px; }
+}

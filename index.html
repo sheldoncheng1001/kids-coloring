@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ffe9a8">
+<title>小畫家：描一描、塗一塗</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🖍️%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>🖍️ 描一描、塗一塗</h1>
+    <nav id="picker" aria-label="選一張圖"></nav>
+  </header>
+
+  <main>
+    <div id="stage">
+      <div id="board">
+        <canvas id="userLayer" aria-label="畫布"></canvas>
+        <canvas id="outlineLayer" aria-hidden="true"></canvas>
+      </div>
+    </div>
+
+    <aside id="panel">
+      <section class="group" id="tools" aria-label="工具">
+        <button class="tool big" data-tool="pen" title="描線筆"><span class="ico">✏️</span><span>描線筆</span></button>
+        <button class="tool big" data-tool="brush" title="畫筆"><span class="ico">🖌️</span><span>畫筆</span></button>
+        <button class="tool big" data-tool="fill" title="油漆桶"><span class="ico">🪣</span><span>油漆桶</span></button>
+        <button class="tool big" data-tool="eraser" title="橡皮擦"><span class="ico">🧽</span><span>橡皮擦</span></button>
+      </section>
+
+      <section class="group" id="sizes" aria-label="粗細">
+        <button class="size" data-size="0" title="細"><i style="--d:10px"></i><span>細</span></button>
+        <button class="size" data-size="1" title="中"><i style="--d:18px"></i><span>中</span></button>
+        <button class="size" data-size="2" title="粗"><i style="--d:28px"></i><span>粗</span></button>
+      </section>
+
+      <section class="group" id="palette" aria-label="顏色"></section>
+
+      <section class="group" id="actions" aria-label="動作">
+        <button class="act" id="undoBtn" title="上一步"><span class="ico">↩️</span><span>上一步</span></button>
+        <button class="act" id="lineBtn" title="線條樣式"><span class="ico">〰️</span><span id="lineLabel">虛線</span></button>
+        <button class="act" id="clearBtn" title="全部清掉"><span class="ico">🗑️</span><span>清除</span></button>
+        <button class="act save" id="saveBtn" title="存成圖片"><span class="ico">💾</span><span>存圖片</span></button>
+      </section>
+    </aside>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+<script src="pictures.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
